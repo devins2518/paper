@@ -134,7 +134,6 @@ impl Environment {
                                                     if timer.is_none() || timer.as_ref().unwrap().elapsed() > time::Duration::from_millis(600) {
                                                         timer = Some(time::Instant::now());
                                                         layer_surface.ack_configure(serial);
-                                                        layer_surface.set_size(width, height);
 
 														if let Some(mut pool) = mempool.pool() {
     														if pool.resize((width * height) as usize * 4).is_ok() {

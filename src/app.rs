@@ -6,6 +6,7 @@ use rand::thread_rng;
 use snui::wayland::*;
 use snui::widgets::*;
 use rand::seq::IteratorRandom;
+use std::ops::DerefMut;
 use std::io::Write;
 
 pub struct Paper {
@@ -49,15 +50,15 @@ pub fn draw(buf: &mut Buffer, paper: &Paper,  width: u32, height: u32) {
     match &paper.style {
         Style::Color(color) => {
             let pxcount = buf.get_width() * buf.get_height();
-            let mut writer = &mut buf.canvas[0..];
+            let mut writer = buf.canvas.deref_mut();
             for _ in 0..pxcount {
                 writer.write_all(&color.to_ne_bytes()).unwrap();
             }
             writer.flush().unwrap();
         }
         Style::Image(image) => if let Ok(image) = image.as_ref() {
-            let dx = width/scale + width/(scale * 2);
-            let dy = height/scale + height/(scale * 2);
+            let dx = width/scale + width/(scale * scale);
+            let dy = height/scale + height/(scale * scale);
             image.resize(width as u32 / scale, height as u32 / scale).draw(
                 &mut buf.canvas,
                 if scale > 1 { dx } else { 0 },

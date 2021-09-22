@@ -562,6 +562,7 @@ dependencies = [
 [[package]]
 name = "snui"
 version = "0.1.0"
+source = "git+https://gitlab.com/snakedye/snui.git#d82ba44c354d79274b4cb6dceb655e3e4770074f"
 dependencies = [
  "fontdue",
  "image",
